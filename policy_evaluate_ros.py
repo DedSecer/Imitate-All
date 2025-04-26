@@ -41,18 +41,18 @@ class Evaluate(Node):
         
         # subscriber: image, qpos
         self.bridge = CvBridge()
-        self.head_color_suber = self.create_subscription(Image, '/mmk2/head_camera/color/image_raw', self.head_color_callback, 1)
-        self.head_depth_suber = self.create_subscription(Image, '/mmk2/head_camera/aligned_depth_to_color/image_raw', self.head_depth_callback, 2)
-        self.left_color_suber = self.create_subscription(Image, '/mmk2/left_camera/color/image_raw', self.left_color_callback, 1)
-        self.right_color_suber = self.create_subscription(Image, '/mmk2/right_camera/color/image_raw', self.right_color_callback, 1)
-        self.joint_state_suber = self.create_subscription(JointState, '/mmk2/joint_states', self.joint_state_callback, 1)
+        self.head_color_suber = self.create_subscription(Image, '/head_camera/color/image_raw', self.head_color_callback, 1)
+        self.head_depth_suber = self.create_subscription(Image, '/head_camera/aligned_depth_to_color/image_raw', self.head_depth_callback, 2)
+        self.left_color_suber = self.create_subscription(Image, '/left_camera/color/image_raw', self.left_color_callback, 1)
+        self.right_color_suber = self.create_subscription(Image, '/right_camera/color/image_raw', self.right_color_callback, 1)
+        self.joint_state_suber = self.create_subscription(JointState, '/joint_states', self.joint_state_callback, 1)
 
         # publisher: action
         self.cmd_vel_puber = self.create_publisher(Twist, '/cmd_vel', 1)
-        self.spine_cmd_puber = self.create_publisher(Float64MultiArray, '/mmk2/spine_forward_position_controller/commands', 1)
-        self.head_cmd_puber = self.create_publisher(Float64MultiArray, '/mmk2/head_forward_position_controller/commands', 1)
-        self.left_arm_cmd_puber = self.create_publisher(Float64MultiArray, '/mmk2/left_arm_forward_position_controller/commands', 1)
-        self.right_arm_cmd_puber = self.create_publisher(Float64MultiArray, '/mmk2/right_arm_forward_position_controller/commands', 1)
+        self.spine_cmd_puber = self.create_publisher(Float64MultiArray, '/spine_forward_position_controller/commands', 1)
+        self.head_cmd_puber = self.create_publisher(Float64MultiArray, '/head_forward_position_controller/commands', 1)
+        self.left_arm_cmd_puber = self.create_publisher(Float64MultiArray, '/left_arm_forward_position_controller/commands', 1)
+        self.right_arm_cmd_puber = self.create_publisher(Float64MultiArray, '/right_arm_forward_position_controller/commands', 1)
 
     def head_color_callback(self, msg):
         self.obs["images"]["0"] = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
